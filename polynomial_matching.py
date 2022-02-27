@@ -25,7 +25,7 @@ class polyCoeff:
         '''Given source colors and destination colors, calculate and return the coefficient matrix'''
         #  [r g b rg rb gb r2 g2 b2 rgb 1].
         h = np.array([self.src[:,0], self.src[:,1], self.src[:,2], self.src[:,0]*self.src[:,1], self.src[:,0]*self.src[:,2], self.src[:,1]*self.src[:,2],
-        self.src[:,0]*self.src[:,0], self.src[:,1]*self.src[:,1], self.src[:,2]*self.src[:,2], self.src[:,0]*self.src[:,1]*self.src[:,3], np.ones(self.src[:,0].shape())])
+        self.src[:,0]*self.src[:,0], self.src[:,1]*self.src[:,1], self.src[:,2]*self.src[:,2], self.src[:,0]*self.src[:,1]*self.src[:,3], np.ones(np.shape(self.src[:,0]))])
         regr = LinearRegression(fit_intercept=False).fit(h, self.target)
         return regr.coef_
 
@@ -33,7 +33,7 @@ class polyCoeff:
     def transform(self, img):
         '''Given source image and polynomial matching coefficient, return the transformed image.'''
         h_img = np.array([img[:,0], img[:,1], img[:,2], img[:,0]*img[:,1], img[:,0]*img[:,2], img[:,1]*img[:,2],
-        img[:,0]*img[:,0], img[:,1]*img[:,1], img[:,2]*img[:,2], img[:,0]*img[:,1]*img[:,3], np.ones(img[:,0].shape())])
+        img[:,0]*img[:,0], img[:,1]*img[:,1], img[:,2]*img[:,2], img[:,0]*img[:,1]*img[:,3], np.ones(np.shape(img[:,0]))])
         return np.matmul(h_img, self.M)
        
 
