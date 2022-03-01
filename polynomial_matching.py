@@ -7,7 +7,9 @@ class polyCoeff:
 
     def __init__(self, src, tgt) -> None:
         '''The class of polynomial matching coefficient.'''
-        self.M = self.match(src, tgt)
+        source = src.astype(np.float64)
+        target = tgt.astype(np.float64)
+        self.M = self.match(source, target)
 
     def to_npy(self, file_path):
         '''Save the matrix to .npy file'''
@@ -28,8 +30,9 @@ class polyCoeff:
         return regr.coef_
 
 
-    def transform(self, img):
+    def transform(self, image):
         '''Given source image and polynomial matching coefficient, return the transformed image.'''
+        img = image.astype(np.float64)
         h_img = np.array([img[:,:,0], img[:,:,1], img[:,:,2], img[:,:,0]*img[:,:,1], img[:,:,0]*img[:,:,2], img[:,:,1]*img[:,:,2],
         img[:,:,0]*img[:,:,0], img[:,:,1]*img[:,:,1], img[:,:,2]*img[:,:,2], img[:,:,0]*img[:,:,1]*img[:,:,2], np.ones(np.shape(img[:,:,0]))]).T
         rtn = np.matmul(h_img, self.M.T)
